@@ -83,6 +83,98 @@ theme: ./theme
 theme repo を fetch / install して使う前提なら、通常は `theme: inoslides-theme` です。
 `theme: ./theme` は theme source を project 内に直接持っているときだけ使います。
 
+## Migration From An Existing Deck
+
+既存 deck を `inoslides-theme` に差し替えるときは、次の順で進めると安全です。
+
+1. `package.json` に `inoslides-theme` を追加する
+2. `slides.md` の frontmatter を `theme: inoslides-theme` に変更する
+3. repo 内の local override file を確認する
+4. theme にない custom layout を置き換える
+5. dev と build の両方で検証する
+
+### 1. Install
+
+```bash
+npm install inoslides-theme@git+https://github.com/inody/inoslides-theme.git
+```
+
+### 2. Switch The Theme Name
+
+`slides.md` では package 名をそのまま指定します。
+
+```yaml
+---
+theme: inoslides-theme
+---
+```
+
+### 3. Check For Shadowing Files
+
+Slidev では project 側の file が theme 側より優先されます。
+以下のような同名 file が repo 内に残っていると、theme の更新が反映されません。
+
+- `global-bottom.vue`
+- `layouts/cover.vue`
+- `layouts/center.vue`
+- `layouts/two-cols.vue`
+- `layouts/three-cols.vue`
+- `components/Panel.vue`
+
+theme の layout / component を使いたい場合は、これらの local file をできるだけ置かない方が安全です。
+
+### 4. Replace Deck-Specific Layouts
+
+`inoslides-theme` が提供するのは次です。
+
+- `cover`
+- `center`
+- `two-cols`
+- `three-cols`
+- `Panel`
+
+`emph*` のような deck-specific custom layout は含まれていないので、必要に応じて `Panel` や既存 layout に置き換えてください。
+
+### 5. Image Paths Under `public/`
+
+`public/` 配下の画像は、`/public/...` ではなく root path を Vue binding で渡す方が安全です。
+
+```html
+<img :src="'/figures/example.png'" />
+```
+
+この形なら、dev の warning と build 時の import 解釈ずれを避けやすくなります。
+
+### 6. Validate Both Dev And Build
+
+dev server だけ通っても、build で落ちることがあります。最低限、両方を確認してください。
+
+```bash
+npx slidev slides.md
+npx slidev build slides.md
+```
+
+### 7. If `Panel` Does Not Render
+
+次を確認してください。
+
+- repo 内に `components/Panel.vue` が残っていないか
+- 対象 slide の frontmatter 区切りが曖昧でないか
+
+必要なら、その slide の先頭で明示的に frontmatter を切ると安定します。
+
+```md
+---
+layout: default
+---
+
+## Main Result
+
+<Panel title="Key Point">
+...
+</Panel>
+```
+
 ## Cover Layout
 
 `cover` は slot に生 HTML を書くより、frontmatter で指定して使う前提です。
