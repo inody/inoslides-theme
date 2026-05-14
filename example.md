@@ -2,10 +2,10 @@
 theme: .
 title: Theme Example
 coverDate: 2026-05
-coverTitle: Imperial Report Theme Example
+coverTitle: Research Report Theme Example
 coverMeta:
   - Sample deck for layout and component usage
-  - slidev-theme-imperial-report
+  - inoslides-theme
 coverBodyTitle: Contents
 ---
 

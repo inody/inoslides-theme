@@ -102,7 +102,7 @@
 
 .slidev-layout.cover {
   .cover-shell {
-    @apply flex flex-col gap-6 max-w-[42rem];
+    @apply flex flex-col gap-6 max-w-[56rem];
   }
 
   .cover-shell__date {
