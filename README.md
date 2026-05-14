@@ -2,6 +2,29 @@
 
 Imperial report 用に整理した Slidev theme です。
 
+## Local Setup
+
+theme repo を clone した直後の、ほぼ何もない環境から local で sample deck を立ち上げる最小手順です。
+
+```bash
+git clone https://github.com/inody/inoslides-theme.git
+cd inoslides-theme
+npm install
+npm run dev -- example.md
+```
+
+build だけ確認したい場合は以下です。
+
+```bash
+npm run build -- example.md
+```
+
+手元の deck file 名が `slides.md` なら、同じ repo 内で以下のように起動できます。
+
+```bash
+npm run dev -- slides.md
+```
+
 ## What Is Included
 
 - `layouts/cover.vue`: frontmatter から cover を組み立てる layout
@@ -14,7 +37,7 @@ Imperial report 用に整理した Slidev theme です。
 ## Run The Example
 
 ```bash
-npm exec -- slidev example.md
+npm run dev -- example.md
 ```
 
 この sample deck で layout と component の使い方を一通り確認できます。

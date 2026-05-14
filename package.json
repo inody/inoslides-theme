@@ -1,6 +1,10 @@
 {
   "name": "inoslides-theme",
   "private": true,
+  "scripts": {
+    "dev": "slidev",
+    "build": "slidev build"
+  },
   "keywords": [
     "slidev",
     "slidev-theme"
@@ -27,5 +31,8 @@
     "@slidev/client": "^52.15.2",
     "codemirror-theme-vars": "^0.1.2",
     "prism-theme-vars": "^0.2.4"
+  },
+  "devDependencies": {
+    "@slidev/cli": "52.15.2"
   }
 }
