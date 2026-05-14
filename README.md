@@ -1,6 +1,6 @@
 # inoslides-theme
 
-Imperial report 用に整理した Slidev theme です。
+research report 用に整理した Slidev theme です。
 
 ## Local Setup
 
@@ -42,6 +42,47 @@ npm run dev -- example.md
 
 この sample deck で layout と component の使い方を一通り確認できます。
 
+## Use From Another Project
+
+別の Slidev project からこの theme を使う場合は、theme の置き方で指定方法が変わります。
+
+### 1. Theme を dependency として install する場合
+
+project root の `package.json` に例えば以下のように入れます。
+
+```json
+{
+  "dependencies": {
+    "inoslides-theme": "git+https://github.com/inody/inoslides-theme.git"
+  }
+}
+```
+
+この場合、`slides.md` では package 名をそのまま使います。
+
+```yaml
+---
+theme: inoslides-theme
+---
+```
+
+これは `tmp/` で実際に build 確認済みの使い方です。
+
+### 2. Theme directory を project 内に直接置く場合
+
+例えば project root の直下に `theme/` directory を置いたなら、`slides.md` では相対 path を使います。
+
+```yaml
+---
+theme: ./theme
+---
+```
+
+### Recommendation
+
+theme repo を fetch / install して使う前提なら、通常は `theme: inoslides-theme` です。
+`theme: ./theme` は theme source を project 内に直接持っているときだけ使います。
+
 ## Cover Layout
 
 `cover` は slot に生 HTML を書くより、frontmatter で指定して使う前提です。
@@ -50,10 +91,10 @@ npm run dev -- example.md
 ---
 theme: .
 coverDate: 2026-05
-coverTitle: Imperial College London留学 中間報告
+coverTitle: Research Progress Report
 coverMeta:
-  - 数理工学研究領域
-  - 井上大輔
+  - Applied Mathematics Group
+  - Your Name
 coverBodyTitle: 本日のアウトライン
 ---
 ```
