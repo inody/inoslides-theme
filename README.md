@@ -32,6 +32,7 @@ npm run dev -- slides.md
 - `layouts/two-cols.vue`: 比率と align を指定できる 2 カラム layout
 - `layouts/three-cols.vue`: 3 カラム layout
 - `components/Panel.vue`: 汎用囲み component
+- `components/PseudoCode.vue`: 疑似コード・アルゴリズム表示用 component
 - `styles/layouts.css`: layout と typography の single source of truth
 
 ## Run The Example
@@ -233,6 +234,25 @@ coverBodyTitle: 本日のアウトライン
 ```
 
 `title` prop の代わりに `#title` slot も使えます。
+
+## PseudoCode Component
+
+```md
+<PseudoCode title="DeepGSB Algorithm">
+
+1. **Backward drift update** ($\phi$)
+  - Generate forward trajectories using $(Y_\theta, Z_\theta)$
+  - Update $(\hat{Y}_\phi, \hat{Z}_\phi)$ to minimize $\mathcal L(\phi)$
+
+2. **Forward drift update** ($\theta$)
+  - Generate backward trajectories using $(\hat{Y}_\phi, \hat{Z}_\phi)$
+  - Update $(Y_\theta, Z_\theta)$ to minimize $\mathcal L(\theta)$
+
+</PseudoCode>
+```
+
+`PseudoCode` は code block ではなく通常の slot content を使うので、Markdown と KaTeX をそのまま併用できます。
+`label` prop を指定すると左上の pill 表示を差し替えられます。
 
 ## Still Optional Before Publishing
 

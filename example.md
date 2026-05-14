@@ -11,10 +11,11 @@ coverBodyTitle: Contents
 
 1. Default typography
 2. Panel component
-3. Center layout
-4. Two-cols layout
-5. Two-cols with lower row
-6. Three-cols layout
+3. PseudoCode component
+4. Center layout
+5. Two-cols layout
+6. Two-cols with lower row
+7. Three-cols layout
 
 ---
 
@@ -43,6 +44,22 @@ $$
 - KaTeX もそのまま入れられます: $f(x,t,m_t) \approx \hat f_\psi(x,t)$
 
 </Panel>
+
+---
+
+# PseudoCode Component
+
+<PseudoCode title="DeepGSB Algorithm">
+
+1. **Backward drift update** ($\phi$)
+  - Generate forward trajectories using $(Y_\theta, Z_\theta)$
+  - Update $(\hat{Y}_\phi, \hat{Z}_\phi)$ to minimize $\mathcal L(\phi)$
+
+2. **Forward drift update** ($\theta$)
+  - Generate backward trajectories using $(\hat{Y}_\phi, \hat{Z}_\phi)$
+  - Update $(Y_\theta, Z_\theta)$ to minimize $\mathcal L(\theta)$
+
+</PseudoCode>
 
 ---
 layout: center
