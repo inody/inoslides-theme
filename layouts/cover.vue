@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { handleBackground } from '../layoutHelper'
+import { resolveAssetUrl } from '../layoutHelper'
 
 const props = defineProps({
   background: {
@@ -24,7 +24,16 @@ const props = defineProps({
   },
 })
 
-const style = computed(() => handleBackground(props.background, true))
+const isColorBackground = computed(() =>
+  props.background && ['#', 'rgb', 'hsl'].some(v => props.background.indexOf(v) === 0))
+const backgroundUrl = computed(() =>
+  props.background && !isColorBackground.value ? resolveAssetUrl(props.background) : '')
+const style = computed(() => ({
+  background: isColorBackground.value ? props.background : '#fff',
+  color: '#0f172a',
+  position: 'relative',
+  overflow: 'hidden',
+}))
 const metaLines = computed(() => Array.isArray(props.coverMeta)
   ? props.coverMeta
   : props.coverMeta
@@ -39,7 +48,18 @@ const useStructuredCover = computed(() =>
 
 <template>
   <div class="slidev-layout cover" :style="style">
-    <div v-if="useStructuredCover" class="my-auto w-full">
+    <div
+      v-if="backgroundUrl"
+      aria-hidden="true"
+      style="position:absolute; inset:-28px; z-index:0; background-repeat:no-repeat; background-position:center; background-size:cover; filter:blur(8px) saturate(0.95); opacity:0.60; transform:scale(1.04);"
+      :style="{ backgroundImage: `url(${backgroundUrl})` }"
+    />
+    <div
+      v-if="backgroundUrl"
+      aria-hidden="true"
+      style="position:absolute; inset:0; z-index:0; background:rgba(255,255,255,0.42);"
+    />
+    <div v-if="useStructuredCover" class="my-auto w-full" style="position:relative; z-index:1;">
       <div class="cover-shell">
         <div v-if="props.coverDate" class="cover-shell__date">
           {{ props.coverDate }}
@@ -55,7 +75,7 @@ const useStructuredCover = computed(() =>
           </p>
         </div>
 
-        <div class="cover-shell__body">
+        <div class="cover-shell__body" style="border-top:0; padding-top:0;">
           <div v-if="props.coverBodyTitle" class="cover-shell__body-title">
             {{ props.coverBodyTitle }}
           </div>
@@ -63,7 +83,7 @@ const useStructuredCover = computed(() =>
         </div>
       </div>
     </div>
-    <div v-else class="my-auto w-full">
+    <div v-else class="my-auto w-full" style="position:relative; z-index:1;">
       <slot />
     </div>
   </div>
