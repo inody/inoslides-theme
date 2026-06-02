@@ -61,7 +61,11 @@ const hasHeader = computed(() => !!props.title || !!slots.title)
   margin-bottom: 0;
 }
 
+.theme-panel__body :deep(p) {
+  margin-bottom: 0.5em;
+}
+
 .theme-panel__body :deep(.katex-display) {
-  margin: 0.6em 0;
+  margin: 0.8em 0;
 }
 </style>
