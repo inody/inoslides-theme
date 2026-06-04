@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { CSSProperties } from 'vue'
 import { computed } from 'vue'
 import { resolveAssetUrl } from '../layoutHelper'
 
@@ -28,16 +29,16 @@ const isColorBackground = computed(() =>
   props.background && ['#', 'rgb', 'hsl'].some(v => props.background.indexOf(v) === 0))
 const backgroundUrl = computed(() =>
   props.background && !isColorBackground.value ? resolveAssetUrl(props.background) : '')
-const style = computed(() => ({
+const style = computed((): CSSProperties => ({
   background: isColorBackground.value ? props.background : '#fff',
   color: '#0f172a',
   position: 'relative',
   overflow: 'hidden',
 }))
 const metaLines = computed(() => Array.isArray(props.coverMeta)
-  ? props.coverMeta
+  ? (props.coverMeta as string[])
   : props.coverMeta
-    ? [props.coverMeta]
+    ? [props.coverMeta as string]
     : [])
 const useStructuredCover = computed(() =>
   !!props.coverDate
@@ -60,7 +61,7 @@ const useStructuredCover = computed(() =>
       style="position:absolute; inset:0; z-index:0; background:rgba(255,255,255,0.42);"
     />
     <div v-if="useStructuredCover" class="my-auto w-full" style="position:relative; z-index:1;">
-      <div class="cover-shell">
+      <div class="cover-shell" style="gap: 0.6rem;">
         <div v-if="props.coverDate" class="cover-shell__date">
           {{ props.coverDate }}
         </div>
@@ -70,7 +71,7 @@ const useStructuredCover = computed(() =>
         </h1>
 
         <div v-if="metaLines.length" class="cover-shell__meta">
-          <p v-for="line in metaLines" :key="line">
+          <p v-for="(line, i) in metaLines" :key="i">
             {{ line }}
           </p>
         </div>

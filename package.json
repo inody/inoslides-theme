@@ -30,7 +30,8 @@
   "dependencies": {
     "@slidev/client": "^52.15.2",
     "codemirror-theme-vars": "^0.1.2",
-    "prism-theme-vars": "^0.2.4"
+    "prism-theme-vars": "^0.2.4",
+    "uqr": "^0.1.3"
   },
   "devDependencies": {
     "@slidev/cli": "52.15.2"
